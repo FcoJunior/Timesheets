@@ -1,5 +1,3 @@
-import { RequestOptions } from 'http';
-import { RequestPromise } from 'request-promise';
 import {
     UserEndpoint,
     TagEndpoint,
@@ -11,7 +9,7 @@ import {
     CommentEndpoint,
 } from './endpoints';
 import { YoutrackTokenOptions } from 'youtrack-rest-client/dist/options/youtrack_options';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export interface YoutrackClient {
     get(url: string, params?: {}, headers?: {}): Promise<Response>;
@@ -62,7 +60,7 @@ export class Youtrack implements YoutrackClient {
         this.comments = new CommentEndpoint(this);
     }
 
-    public post(url: string, params = {}, headers: {} = {}) {
+    public post(url: string, params = {}, headers: {} = {}): Promise<any> {
         return axios({
             method: 'post',
             baseURL: this.baseUrl + url,
@@ -70,25 +68,28 @@ export class Youtrack implements YoutrackClient {
         });
     }
 
-    public get(url: string, params = {}, headers = {}): RequestPromise {
-        return request.get(
-            this.baseUrl + url,
-            this.prepareParams(params, headers)
-        );
+    public get(url: string, params = {}, headers = {}): Promise<any> {
+        return axios({
+            method: 'get',
+            baseURL: this.baseUrl + url,
+            ...this.prepareParams(params, headers),
+        });
     }
 
-    public delete(url: string, params = {}, headers = {}): RequestPromise {
-        return request.delete(
-            this.baseUrl + url,
-            this.prepareParams(params, headers)
-        );
+    public delete(url: string, params = {}, headers = {}): Promise<any> {
+        return axios({
+            method: 'delete',
+            baseURL: this.baseUrl + url,
+            ...this.prepareParams(params, headers),
+        });
     }
 
-    public put(url: string, params = {}, headers = {}): RequestPromise {
-        return request.put(
-            this.baseUrl + url,
-            this.prepareParams(params, headers)
-        );
+    public put(url: string, params = {}, headers = {}): Promise<any> {
+        return axios({
+            method: 'put',
+            baseURL: this.baseUrl + url,
+            ...this.prepareParams(params, headers),
+        });
     }
 
     private formBaseUrl(baseUrl: string): string {

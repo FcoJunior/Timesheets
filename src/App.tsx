@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import './App.css';
-import { youtrack } from './services/YouTrackService';
+import { youtrack } from './services/Youtrack';
 import { User } from 'youtrack-rest-client';
 import { useQuery } from '@tanstack/react-query';
 

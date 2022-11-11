@@ -1,19 +1,25 @@
-import { BaseEndpoint } from "./base";
-import { IssueTag, IssueTagImpl } from "../entities/issueTag";
-import { PaginationOptions } from "../options/pagination_options";
+import { IssueTag, IssueTagImpl } from 'youtrack-rest-client';
+import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+import { BaseEndpoint } from './base';
 
 export const TagPaths = {
     issueTags: '/issueTags',
-    issueTag: '/issueTags/{tagId}'
+    issueTag: '/issueTags/{tagId}',
 };
 
 export class TagEndpoint extends BaseEndpoint {
-
     public all(paginationOptions: PaginationOptions = {}): Promise<IssueTag[]> {
-        return this.getResourceWithFields<IssueTag[]>(TagPaths.issueTags, IssueTagImpl, { qs: paginationOptions });
+        return this.getResourceWithFields<IssueTag[]>(
+            TagPaths.issueTags,
+            IssueTagImpl,
+            { qs: paginationOptions }
+        );
     }
 
     public byId(tagId: string): Promise<IssueTag> {
-        return this.getResourceWithFields<IssueTag>(this.format(TagPaths.issueTag, { tagId }), IssueTagImpl);
+        return this.getResourceWithFields<IssueTag>(
+            this.format(TagPaths.issueTag, { tagId }),
+            IssueTagImpl
+        );
     }
 }

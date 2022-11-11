@@ -1,5 +1,8 @@
 import * as format from 'string-template';
-import { RequestPromise } from 'request-promise';
+import {
+    generateFieldsQuery,
+    GenericObject,
+} from 'youtrack-rest-client/dist/entities/fields/utils';
 import { YoutrackClient } from '../client';
 
 export class BaseEndpoint {
