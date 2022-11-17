@@ -1,15 +1,13 @@
+import { Command, CommandList, CommandListImpl } from '../entities/command';
 import {
     Issue,
     IssueImpl,
+    NewIssue,
     ReducedIssue,
     ReducedIssueImpl,
-    NewIssue,
     UpdateIssue,
-    Command,
-    CommandList,
-    CommandListImpl,
-} from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+} from '../entities/issue';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const IssuePaths = {

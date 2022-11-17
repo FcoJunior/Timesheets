@@ -1,5 +1,5 @@
-import { WorkItem, WorkItemImpl } from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+import { WorkItem, WorkItemImpl } from '../entities/workItem';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const WorkItemPaths = {

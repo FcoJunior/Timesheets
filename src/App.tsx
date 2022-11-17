@@ -1,9 +1,7 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
 import './App.css';
-import { youtrack } from './services/Youtrack';
-import { User } from 'youtrack-rest-client';
+import { youtrack } from './services/Youtrack/client';
 import { useQuery } from '@tanstack/react-query';
+import { User, UserFields } from './services/Youtrack/entities/user';
 
 function App() {
     // const [user, setUser] = useState<User>();
@@ -11,15 +9,12 @@ function App() {
     const { data } = useQuery<User>(
         ['current-user'],
         async () => {
-            return youtrack.users.current();
+            return youtrack.users.current([ UserFields.email, UserFields.fullName ]);
         },
         { refetchOnWindowFocus: false, retry: 1 }
     );
-    // youtrack.users.current().then((user: User) => {
-    //     setUser(user);
-    // });
 
-    return <div className="App">{data?.name}</div>;
+    return <div className="App">Nome: {data?.fullName}</div>;
 }
 
 export default App;

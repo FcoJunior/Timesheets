@@ -1,21 +1,16 @@
-import {
-    User,
-    UserImpl,
-    ReducedUser,
-    ReducedUserImpl,
-} from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+import { ReducedUser, ReducedUserImpl, User, UserFields, UserImpl } from '../entities/user';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const UserPaths = {
-    current: '/admin/users/me',
-    users: '/admin/users',
-    user: '/admin/users/{userId}',
+    current: '/users/me',
+    users: '/users',
+    user: '/users/{userId}',
 };
 
 export class UserEndpoint extends BaseEndpoint {
-    public current(): Promise<User> {
-        return this.getResourceWithFields<User>(UserPaths.current, UserImpl);
+    public current(fields: UserFields[] = []): Promise<User> {
+        return this.getResourceWithFieldNames<User>(UserPaths.current, fields);
     }
 
     public all(

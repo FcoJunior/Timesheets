@@ -2,8 +2,8 @@ import {
     IssueComment,
     IssueCommentImpl,
     UpdateIssueComment,
-} from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+} from '../entities/comment';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const CommentPaths = {

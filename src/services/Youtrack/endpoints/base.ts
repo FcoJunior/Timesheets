@@ -1,9 +1,6 @@
 import * as format from 'string-template';
-import {
-    generateFieldsQuery,
-    GenericObject,
-} from 'youtrack-rest-client/dist/entities/fields/utils';
-import { YoutrackClient } from '../client';
+import { GenericObject, generateFieldsQuery } from '../entities/fields/utils';
+import { YoutrackClient } from '../youtrack';
 
 export class BaseEndpoint {
     public constructor(protected client: YoutrackClient) {}
@@ -16,7 +13,7 @@ export class BaseEndpoint {
         return Promise.resolve(
             request
                 .then((response) => {
-                    return response;
+                    return response.data;
                 })
                 .catch((error) => {
                     return Promise.reject(error);
@@ -37,11 +34,22 @@ export class BaseEndpoint {
         implementation: new () => object,
         options: { qs?: GenericObject } = {}
     ): Promise<T> {
-        return this.getResource(url, {
+        return this.getResource<T>(url, {
             qs: {
                 fields: generateFieldsQuery(new implementation()),
                 ...(options.qs || {}),
             },
+        });
+    }
+    
+    protected getResourceWithFieldNames<T>(
+        url: string,
+        fields: Array<string>
+    ): Promise<T> {
+        return this.getResource<T>(url, {
+            params: {
+                fields: fields.join(',')
+            }
         });
     }
 

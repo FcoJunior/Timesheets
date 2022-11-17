@@ -1,11 +1,11 @@
 import {
-    ReducedProject,
-    ReducedProjectImpl,
     Project,
     ProjectImpl,
-    WorkItemTypeImpl,
-} from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+    ReducedProject,
+    ReducedProjectImpl,
+} from '../entities/project';
+import { WorkItemTypeImpl } from '../entities/workItem';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const ProjectPaths = {

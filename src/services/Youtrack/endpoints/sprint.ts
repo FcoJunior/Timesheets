@@ -1,12 +1,12 @@
 import {
+    NewSprint,
     ReducedSprint,
     ReducedSprintImpl,
     Sprint,
     SprintImpl,
-    NewSprint,
     UpdateSprint,
-} from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+} from '../entities/sprint';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const SprintPaths = {

@@ -5,8 +5,8 @@ import {
     ReducedAgile,
     ReducedAgileImpl,
     UpdateAgile,
-} from 'youtrack-rest-client';
-import { PaginationOptions } from 'youtrack-rest-client/dist/options/pagination_options';
+} from '../entities/agile';
+import { PaginationOptions } from '../options/pagination_options';
 import { BaseEndpoint } from './base';
 
 export const AgilePaths = {
