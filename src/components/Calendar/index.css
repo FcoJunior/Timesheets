@@ -1,0 +1,11 @@
+.fc-scrollgrid {
+    border: none !important;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+    border: none !important;
+}
+
+.fc-scrollgrid-sync-inner {
+    text-align: start !important;
+}
