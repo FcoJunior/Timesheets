@@ -23,7 +23,7 @@ function App() {
             </header>
             <div className="px-4">
                 <div className="font-heading text-2xl">Activities</div>
-                <div className="App">Nome: {data?.fullName}</div>
+                {/* <div className="App">Nome: {data?.fullName}</div> */}
             </div>
             <div className="px-4 pb-6">
                 <Calendar />
