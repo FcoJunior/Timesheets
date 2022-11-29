@@ -9,3 +9,7 @@
 .fc-scrollgrid-sync-inner {
     text-align: start !important;
 }
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #e2e8f0;
+}
