@@ -1,19 +1,27 @@
-import { youtrack } from './services/Youtrack/client';
 import { useQuery } from '@tanstack/react-query';
-import { User, UserFields } from './services/Youtrack/entities/user';
 import { Menu } from './components/Menu';
 import { Calendar } from './components/Calendar';
+import { currentUser, User } from './services/api/user';
+import { useEffect } from 'react';
+import { getIssueWorkItemsByUser } from './services/api/issue';
 
 function App() {
-    const { data } = useQuery<User>(
+    const { data, isFetched } = useQuery<User>(
         ['current-user'],
         async () => {
-            return youtrack.users.current([
-                UserFields.email,
-                UserFields.fullName,
-            ]);
+            return currentUser();
         },
-        { refetchOnWindowFocus: false, retry: 1 }
+        {
+            refetchOnWindowFocus: false,
+            retry: 1,
+            onSuccess: () => {
+                return getIssueWorkItemsByUser(
+                    data!.id,
+                    '2022-11-27',
+                    '2022-12-03'
+                );
+            },
+        }
     );
 
     return (
