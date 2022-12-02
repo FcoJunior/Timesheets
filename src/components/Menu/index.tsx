@@ -1,4 +1,9 @@
+import { UserContext } from "@/context/UserContextProvider";
+import { useContext } from "react";
+
 const Menu = () => {
+    const userContext = useContext(UserContext);
+
     return (
         <nav className="px-4 flex justify-between bg-slate-50 items-center shadow-sm">
             <div className="flex text-lg items-center">
@@ -9,7 +14,13 @@ const Menu = () => {
                     Timesheets
                 </span>
             </div>
-            <div className="text-slate-700">Olá, Username</div>
+            {
+                userContext.user && (
+                    <div className="text-slate-700">
+                        Olá, { userContext.user.fullName }
+                    </div>
+                )
+            }
         </nav>
     );
 };

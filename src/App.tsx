@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Menu } from './components/Menu';
 import { Calendar } from './components/Calendar';
 import { currentUser, User } from './services/api/user';
-import { useEffect } from 'react';
-import { getIssueWorkItemsByUser } from './services/api/issue';
+import { useContext } from 'react';
+import { UserContext } from './context/UserContextProvider';
 
 function App() {
+    const userContext = useContext(UserContext);
     const { data, isFetched } = useQuery<User>(
         ['current-user'],
         async () => {
@@ -14,12 +15,13 @@ function App() {
         {
             refetchOnWindowFocus: false,
             retry: 1,
-            onSuccess: () => {
-                return getIssueWorkItemsByUser(
-                    data!.id,
-                    '2022-11-27',
-                    '2022-12-03'
-                );
+            onSuccess: (userInfo: User) => {
+                userContext.addCurrentUser(userInfo);
+                // return getIssueWorkItemsByUser(
+                //     data!.id,
+                //     '2022-11-27',
+                //     '2022-12-03'
+                // );
             },
         }
     );
