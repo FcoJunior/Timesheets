@@ -7,11 +7,13 @@ import FullCalendar, {
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import './index.css';
-import { useContext, useState } from 'react';
+import { LegacyRef, useContext, useState } from 'react';
 import { UserContext } from '@/context/UserContextProvider';
 import { useQuery } from '@tanstack/react-query';
 import { getIssueWorkItemsByUser, IssueWorkItem } from '@/services/api/issue';
 import { TimeBox } from '../TimeBox';
+import React from 'react';
+import moment, { Moment } from 'moment';
 
 const initialEvents: EventInput[] = [];
 
@@ -29,17 +31,23 @@ function getTotalByDate(date: Date) {
 const Calendar = () => {
     const [events, setEvent] = useState<EventInput[]>(initialEvents);
     const { user } = useContext(UserContext);
+    const calendarRef: LegacyRef<FullCalendar> = React.createRef();
 
     const {} = useQuery(
         ['issues'],
         async () => {
-            return getIssueWorkItemsByUser(
-                user!.id,
-                '2022-11-27',
-                '2022-12-03'
-            );
+            const startDate = moment(
+                calendarRef.current?.getApi().view.currentStart
+            ).format('YYYY-MM-DD');
+            const endDate = moment(
+                calendarRef.current?.getApi().view.currentEnd
+            )
+                .subtract(1, 'days')
+                .format('YYYY-MM-DD');
+            return getIssueWorkItemsByUser(user!.id, startDate, endDate);
         },
         {
+            enabled: !!user,
             retry: 3,
             onSuccess: (workItems: IssueWorkItem[]) => {
                 const items: EventInput[] = workItems.map((workItem) => {
@@ -64,12 +72,16 @@ const Calendar = () => {
 
     return (
         <FullCalendar
+            ref={calendarRef}
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridWeek"
             initialEvents={events}
             events={events}
             eventContent={renderEventContent}
             dayHeaderContent={renderDateContent}
+            datesSet={(dateInfo: any) => {
+                console.log(dateInfo);
+            }}
         />
     );
 
