@@ -7,7 +7,7 @@ import { UserContext } from './context/UserContextProvider';
 
 function App() {
     const userContext = useContext(UserContext);
-    const { data, isFetched } = useQuery<User>(
+    const { isSuccess } = useQuery<User>(
         ['current-user'],
         async () => {
             return currentUser();
@@ -17,11 +17,6 @@ function App() {
             retry: 1,
             onSuccess: (userInfo: User) => {
                 userContext.addCurrentUser(userInfo);
-                // return getIssueWorkItemsByUser(
-                //     data!.id,
-                //     '2022-11-27',
-                //     '2022-12-03'
-                // );
             },
         }
     );
@@ -31,13 +26,11 @@ function App() {
             <header className="mb-2">
                 <Menu></Menu>
             </header>
-            <div className="px-4">
-                {/* <div className="font-heading text-2xl">Activities</div> */}
-                {/* <div className="App">Nome: {data?.fullName}</div> */}
-            </div>
-            <div className="px-4 pb-6">
-                <Calendar />
-            </div>
+            {userContext.user && (
+                <div className="px-4 pb-6">
+                    <Calendar />
+                </div>
+            )}
         </div>
     );
 }

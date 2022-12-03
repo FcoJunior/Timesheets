@@ -1,12 +1,22 @@
 import api from '..';
+import { WorkItemType } from '../admin';
 
 const defaultIssueFields: string[] = ['id', 'idReadable'];
-const defaultIssueWorkItemFields: string[] = ['id', 'name'];
+const defaultIssueWorkItemFields: string[] = [
+    'id',
+    'text',
+    'date',
+    'duration(presentation,minutes)',
+    'issue(idReadable,summary,description)',
+    'type(id,name)',
+];
 
 export interface Issue {
     $type: string;
     id: string;
     idReadable: string;
+    summary: string;
+    description: string;
 }
 
 export interface IssueWorkItem {
@@ -19,10 +29,10 @@ export interface IssueWorkItem {
     };
     duration: {
         minutes: number;
+        presentation: string;
     };
-    type?: {
-        id: string;
-    };
+    issue: Issue;
+    type?: WorkItemType;
 }
 
 export const getIssues = async (issuesId: string[]): Promise<Issue[]> =>
@@ -41,14 +51,14 @@ export const getIssueWorkItemsByUser = async (
     authorId: string,
     startDate: string,
     endDate: string
-): Promise<Issue[]> =>
+): Promise<IssueWorkItem[]> =>
     api
         .get('workItems', {
             params: {
-                fields: defaultIssueWorkItemFields.join(),
-                author: authorId,
                 startDate: startDate,
                 endDate: endDate,
+                author: authorId,
+                fields: defaultIssueWorkItemFields.join(),
             },
         })
         .then((response) => {
