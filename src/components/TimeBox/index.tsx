@@ -5,6 +5,33 @@ interface TimeBoxProps {
     workItem: IssueWorkItem;
 }
 
+interface TypeWorkPillProps {
+    type: string;
+}
+
+const TypeWorkPill = ({ type }: TypeWorkPillProps) => {
+    function getColor(type: string): string {
+        switch (type) {
+            case 'Desenvolvimento':
+                return 'bg-emerald-200 text-emerald-400';
+            case 'Teste':
+                return 'bg-sky-200 text-sky-400';
+            case 'Documentação':
+                return 'bg-indigo-200 text-indigo-400';
+            case 'Investigação':
+                return 'bg-purple-200 text-purple-400';
+            case 'Análise':
+                return 'bg-red-200 text-red-400';
+            default:
+                return '';
+        }
+    }
+
+    const classes = `rounded-full px-2 font-semibold text-xs ${getColor(type)}`;
+
+    return <span className={classes}>{type}</span>;
+};
+
 export const TimeBox = ({ workItem }: TimeBoxProps) => {
     const description =
         workItem.text && workItem.text.length > 20
@@ -16,16 +43,11 @@ export const TimeBox = ({ workItem }: TimeBoxProps) => {
             <header className="flex justify-between">
                 <div>
                     {workItem.type && (
-                        <span className="rounded-full bg-red-200 text-red-500 px-2">
-                            {workItem.type.name}
-                        </span>
+                        <TypeWorkPill type={workItem.type.name} />
                     )}
                 </div>
-                <div>
-                    <DotsThreeOutline className="text-md" />
-                </div>
             </header>
-            <div>
+            <div className="text-sm">
                 {workItem.issue.idReadable} - {workItem.issue.summary}
             </div>
             {description && <div className="text-gray-400">{description}</div>}

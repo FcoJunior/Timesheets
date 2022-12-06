@@ -4,6 +4,7 @@ import { Calendar } from './components/Calendar';
 import { currentUser, User } from './services/api/user';
 import { useContext } from 'react';
 import { UserContext } from './context/UserContextProvider';
+import { CalendarProvider } from './context/CalendarContextProvider';
 
 function App() {
     const userContext = useContext(UserContext);
@@ -28,7 +29,9 @@ function App() {
             </header>
             {userContext.user && (
                 <div className="px-4 pb-6">
-                    <Calendar />
+                    <CalendarProvider>
+                        <Calendar />
+                    </CalendarProvider>
                 </div>
             )}
         </div>
